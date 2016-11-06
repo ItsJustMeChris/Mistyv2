@@ -42,6 +42,7 @@ AddEventCallback("PLAYER_REGEN_ENABLED", function()
 table.wipe(Group)
 print("Combat Ended")
 combat = false;
+resetLowestHealths()
 end)
 --+--------+--
 --|Commands|--

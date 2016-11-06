@@ -2,7 +2,7 @@
 --|Am I Fighting Helya?|--
 --+--------------------+--
 function isMistyAttackingHelya()
-  if UnitAffectingCombat(96759) then
+  if UnitAffectingCombat("Helya") then
     coverThatHole()
   end
 end
