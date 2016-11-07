@@ -25,6 +25,7 @@ end
 function MistyJustUpdated(self, elapsed)
   if Can_I_Breathe then
     MistyPleaseDoYourRotation();
+    bossManager()
   end
 end
 --+-------------------+--

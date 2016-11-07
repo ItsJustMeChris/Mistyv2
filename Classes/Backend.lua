@@ -55,6 +55,17 @@ function getLowestHealth()
 	end
 end
 
+function lifeCheck()
+    for i=1,#Group do
+      if UnitIsDeadOrGhost(Group[i].Unit) then
+        tremove(Group, i)
+        else if UnitIsDeadOrGhost(tankTarget) then
+        	tankTarget = lowestHealth
+        end
+      end
+    end
+end
+
 function resetLowestHealths()
 	lowestHealth = nil
 	healerHealth = nil
@@ -72,5 +83,14 @@ function shouldItCast()
 				return true
 			end
 		end
+	end
+end
+
+function getCoolDown(spellID)
+	RealCoolDown = GetSpellCooldown(spellID) + GetSpellCooldown(61304)
+	if RealCoolDown == 0 then
+		return true
+			else 
+		return false
 	end
 end
