@@ -107,6 +107,12 @@ end
 end
 
 function getCharges(spell)
-	charges = select(1, GetSpellCharges(spell))
-	return charges
+charges = select(1, GetSpellCharges(spell))
+if charges ~= nil then
+  return charges
+  else if charges == nil then
+charges = 0
+return charges
+end
+end
 end

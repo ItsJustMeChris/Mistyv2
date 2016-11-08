@@ -7,12 +7,12 @@ myCurrentZone = GetRealZoneText();
 --+---------------------+--
 function isMistyInMawOfSouls()
   if myCurrentZone == "Helmouth Cliffs" then
-  	isMistyAttackingHelya()
+    isMistyAttackingHelya()
   end
 end
 
 function bossManager()
-isMistyInMawOfSouls()
+  isMistyInMawOfSouls()
 end
 --+------------+--
 --|Where Am I? |--

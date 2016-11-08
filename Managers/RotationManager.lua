@@ -29,3 +29,7 @@ function MistyPleaseDoYourRotation()
     print("[Misty] Silly, your rotation is not implemented : ) ")
   end
 end
+
+function slope(x1, y1, x2, y2)
+print(y2 - y1, "over", x2 - x1)
+  end

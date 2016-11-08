@@ -53,13 +53,13 @@ function WeaveThatMist()
     if shouldItCast and getCoolDown(Mana_Tea) and tankHealth and tankHealth < 50 and getMana("player") < 60 then
       CastSpellByID(Mana_Tea)
     end
-    if shouldItCast and getCoolDown(Sheiluns_Gift) and lowestHealth and lowestHealth < 60 and getCharges(Sheiluns_Gift) >= 6 then
+    if shouldItCast and getCoolDown(Sheiluns_Gift) and lowestHealth and lowestHealth < 60 and getCharges("Sheilun's Gift") >= 6 then
       CastSpellByID(Sheiluns_Gift, lowestTarget)
     end
-    if shouldItCast and getCoolDown(Sheiluns_Gift) and tankHealth and tankHealth < 50 and getCharges(Sheiluns_Gift) >= 6 then
+    if shouldItCast and getCoolDown(Sheiluns_Gift) and tankHealth and tankHealth < 50 and getCharges("Sheilun's Gift") >= 6 then
       CastSpellByID(Sheiluns_Gift, tankTarget)
     end
-    if shouldItCast and getCoolDown(Sheiluns_Gift) and healerHealth and healerHealth < 50 and getCharges(Sheiluns_Gift) >= 6 then
+    if shouldItCast and getCoolDown(Sheiluns_Gift) and healerHealth and healerHealth < 50 and getCharges("Sheilun's Gift") >= 6 then
       CastSpellByID(Sheiluns_Gift, healerTarget)
     end
     if shouldItCast and getCoolDown(Effuse) and lowestHealth and lowestHealth < 50 then
