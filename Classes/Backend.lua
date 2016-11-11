@@ -86,11 +86,12 @@ end
 
 function shouldItCast()
 currentlyChanneling = select(1, UnitChannelInfo("player"))
-if currentlyChanneling == "Soothing Mist" and isTargetMoving("player") and lowestHealth and lowestHealth <= 90 or currentlyChanneling == "Soothing Mist" and lowestHealth == nil then
+currentlyCasting = UnitCastingInfo("player")
+if currentlyChanneling == "Soothing Mist" and not currentlyCasting and not isTargetMoving("player") and lowestHealth and lowestHealth <= 90 or currentlyChanneling == "Soothing Mist" and lowestHealth == nil then
   return true
 else if currentlyChanneling == "Essence Font" then
   return false
-else if currentlyChanneling == nil and isTargetMoving("player") then
+else if currentlyChanneling == nil and not isTargetMoving("player") then
   return true
 end
 end
@@ -136,9 +137,11 @@ function isInRange(unit)
 end
 
 function canDispell(unit)
-dispellable = select(5, UnitDebuff(unit, 1))
+  for i=1,40 do
+dispellable = select(5, UnitDebuff(unit, i))
 if unit ~= nil and dispellable ~= nil then
   return true
   else return false
+  end
   end
 end
