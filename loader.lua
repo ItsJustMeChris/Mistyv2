@@ -48,4 +48,4 @@ LoadFile("Managers\\BossManager.lua")
 
 -- Boss Specific
 LoadFile("Bosses\\MawOfSouls\\Helya.lua")
-LoadFile("Bosses\\MawOfSouls\\Helya\\coverThatHole.lua")
+LoadFile("Bosses\\MawOfSouls\\Helya\\coverThatHole.lua")  

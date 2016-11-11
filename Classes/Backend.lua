@@ -86,11 +86,11 @@ end
 
 function shouldItCast()
 currentlyChanneling = select(1, UnitChannelInfo("player"))
-if currentlyChanneling == "Soothing Mist" and lowestHealth and lowestHealth <= 90 or currentlyChanneling == "Soothing Mist" and lowestHealth == nil then
+if currentlyChanneling == "Soothing Mist" and isTargetMoving("player") and lowestHealth and lowestHealth <= 90 or currentlyChanneling == "Soothing Mist" and lowestHealth == nil then
   return true
 else if currentlyChanneling == "Essence Font" then
   return false
-else if currentlyChanneling == nil then
+else if currentlyChanneling == nil and isTargetMoving("player") then
   return true
 end
 end
@@ -115,4 +115,30 @@ charges = 0
 return charges
 end
 end
+end
+
+function getCount(spell)
+return GetSpellCount(spell)
+  end
+
+function isTargetMoving(target)
+if UnitMovementFlags(target) == 0 then
+  return false
+  else return true
+  end
+end
+
+function isInRange(unit)
+  if UnitInRange(unit) then
+    return true
+    else return false
+    end
+end
+
+function canDispell(unit)
+dispellable = select(5, UnitDebuff(unit, 1))
+if unit ~= nil and dispellable ~= nil then
+  return true
+  else return false
+  end
 end

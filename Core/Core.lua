@@ -30,7 +30,7 @@ function MistyJustUpdated(self, elapsed)
 end
 --+-------------------+--
 --|Am I Out Of Combat?|--
---+-------------------+--
+--+-------------------+-- 
 AddEventCallback("PLAYER_REGEN_DISABLED", function()
 populateMyGroup()
 print("Combat Enabled")
