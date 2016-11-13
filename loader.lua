@@ -40,7 +40,7 @@ LoadFile("Spells\\Monk\\WindWalker\\Spells.lua")
 LoadFile("UnitAuras\\Buffs.lua")
 LoadFile("UnitAuras\\DeBuffs.lua")
 LoadFile("UnitAuras\\Dispellable.lua")
-
+LoadFile("UnitAuras\\smartDispell.lua")
 -- Managers
 LoadFile("Managers\\RotationManager.lua")
 LoadFile("Managers\\GroupGetter.lua")

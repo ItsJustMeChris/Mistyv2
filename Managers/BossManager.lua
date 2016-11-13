@@ -1,7 +1,7 @@
 --+----------------+--
 --|Get Current Zone|--
 --+----------------+--
-myCurrentZone = GetRealZoneText();
+local myCurrentZone = GetRealZoneText();
 --+---------------------+--
 --|Am I In Maw of Souls?|--
 --+---------------------+--

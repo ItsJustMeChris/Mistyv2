@@ -1,6 +1,6 @@
 
-blacklist = {}
-markerNumber = 1;
+local blacklist = {}
+local markerNumber = 1;
 local mahtime = GetTime()
 function clear(list)
   for k in pairs (list) do
@@ -43,8 +43,8 @@ function coverThatHole()
     if name == "Swirling Pool" and ObjectExists(object) and not blackasfuck(x,y,z) then
       blacklistthatshit(x,y,z)
       placeMarker()
-      print(x,y,z)
       ClickPosition(ObjectPosition(object))
+      print(misty, "I see a hole!  I marked it for your group!")
     else
     end
   end

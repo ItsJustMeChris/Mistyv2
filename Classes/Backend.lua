@@ -67,11 +67,13 @@ end
 
 function lifeCheck()
   for i=1,#Group do
+    if Group[i] ~= nil then
     if UnitIsDeadOrGhost(Group[i].Unit) then
       table.remove(Group, i)
       getLowestHealth()
     else if UnitIsDeadOrGhost(tankTarget) then
       tankTarget = lowestHealth
+    end
     end
   end
 end
@@ -87,16 +89,16 @@ end
 function shouldItCast()
 currentlyChanneling = select(1, UnitChannelInfo("player"))
 currentlyCasting = UnitCastingInfo("player")
-if currentlyChanneling == "Soothing Mist" and not currentlyCasting and not isTargetMoving("player") and lowestHealth and lowestHealth <= 90 or currentlyChanneling == "Soothing Mist" and lowestHealth == nil then
+if (currentlyChanneling == "Soothing Mist" and not currentlyCasting and not isTargetMoving("player") and lowestHealth and lowestHealth <= 90) or (currentlyChanneling == "Soothing Mist" and lowestHealth == nil) then
   return true
-else if currentlyChanneling == "Essence Font" then
+elseif currentlyChanneling == "Essence Font" then
   return false
-else if currentlyChanneling == nil and not isTargetMoving("player") then
+elseif currentlyChanneling == nil and not isTargetMoving("player") then
   return true
+  else return false
 end
 end
-end
-end
+
 
 function getCoolDown(spellID)
 RealCoolDown = GetSpellCooldown(spellID) + GetSpellCooldown(61304)
@@ -139,7 +141,7 @@ end
 function canDispell(unit)
   for i=1,40 do
 dispellable = select(5, UnitDebuff(unit, i))
-if unit ~= nil and dispellable ~= nil then
+if unit ~= nil and (dispellable == "Disease" or dispellable == "Magic" or dispellable == "Poison") then
   return true
   else return false
   end

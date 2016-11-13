@@ -1,10 +1,12 @@
 --+-------------------+--
 --|MistWeaver Rotation|--
 --+-------------------+--
-throttle = 0
+local groupType = IsInRaid() and "raid" or "party";
+local throttle = 0
 function WeaveThatMist()
   throttle = throttle + 1
   if throttle <= 2 then
+    if groupType == "party" then
 
 
     --+--------------+--
@@ -76,6 +78,12 @@ function WeaveThatMist()
     if shouldItCast() and getCoolDown(Detox) and healerTarget and canDispell(healerTarget) then
       CastSpellByID(Detox, healerTarget)
     end
+    if shouldItCast() and getCoolDown(Detox) and lowestTarget and canDispell(lowestTarget) then
+      CastSpellByID(Detox, lowestTarget)
+    end
+    elseif groupType == "raid" and betaraid == true  then
+
+    end
 
   else if throttle >= 90 then
     throttle = 0
@@ -84,7 +92,7 @@ function WeaveThatMist()
     getTankHealth()
     getHealerHealth()
     getLowestHealth()
-
+    lifeCheck()
   end
 end
 end
