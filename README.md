@@ -7,5 +7,8 @@
 ### Credits/Thanks
 > Demliz (Patrik) for dynamic lua loader.  G1zStar for being <3
 
+### Use
+> In game type "/misty help" to see available commands, or just "/misty toggle" to dive right into healing : D
+
 #### If you use this rotation addon I'm not responsible for whatever it causes.  
 > The use of a software to automate any player actions in game is against the blizzard Terms of Service, and can lead to your account being banned.  
