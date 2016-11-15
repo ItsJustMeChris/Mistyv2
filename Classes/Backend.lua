@@ -55,12 +55,12 @@ function getLowestHealth()
   end
 end
 
-function getNumberOfPlayersBellow()
+function getNumberOfPlayersBellow(a)
   for i = 1, #Group do
-    if Group[2] ~= nil and (Group[2].Role == "DAMAGER" or "NONE") then
-      getTwoBellowHealth = getHealth(Group[2].Unit)
-      getTwoBellowUnit = Group[2].Unit
-      return getTwoBellowHealth, getTwoBellowUnit
+    if Group[a] ~= nil and (Group[a].Role == "DAMAGER" or "NONE") then
+      getTwoBellowHealth = getHealth(Group[a].Unit)
+      getTwoBellowUnit = Group[a].Unit
+      return getXBellowHealth, getXBellowUnit
     end
   end
 end
@@ -68,12 +68,11 @@ end
 function lifeCheck()
   for i=1,#Group do
     if Group[i] ~= nil then
-    if UnitIsDeadOrGhost(Group[i].Unit) then
-      table.remove(Group, i)
-      getLowestHealth()
-    else if UnitIsDeadOrGhost(tankTarget) then
-      tankTarget = lowestHealth
-    end
+      if UnitIsDeadOrGhost(Group[i].Unit) then
+        getLowestHealth()
+      else if UnitIsDeadOrGhost(tankTarget) then
+        tankTarget = lowestHealth
+      end
     end
   end
 end
@@ -86,47 +85,47 @@ tankHealth = nil
 end
 
 
-function shouldItCast()
-currentlyChanneling = select(1, UnitChannelInfo("player"))
-currentlyCasting = UnitCastingInfo("player")
-if (currentlyChanneling == "Soothing Mist" and not currentlyCasting and not isTargetMoving("player") and lowestHealth and lowestHealth <= 90) or (currentlyChanneling == "Soothing Mist" and lowestHealth == nil) then
-  return true
-elseif currentlyChanneling == "Essence Font" then
-  return false
-elseif currentlyChanneling == nil and not isTargetMoving("player") then
-  return true
+function shouldItCast(unit)
+  currentlyChanneling = select(1, UnitChannelInfo("player"))
+  currentlyCasting = UnitCastingInfo("player")
+  if (currentlyChanneling == "Soothing Mist" and not currentlyCasting and not isTargetMoving("player") and lowestHealth and lowestHealth <= 90  and lineOfSight(unit)) or (currentlyChanneling == "Soothing Mist" and lowestHealth == nil and lineOfSight(unit)) then
+    return true
+  elseif currentlyChanneling == "Essence Font" then
+    return false
+  elseif currentlyChanneling == nil and not isTargetMoving("player") and lineOfSight(unit)then
+    return true
   else return false
-end
+  end
 end
 
 
 function getCoolDown(spellID)
-RealCoolDown = GetSpellCooldown(spellID) + GetSpellCooldown(61304)
-if RealCoolDown == 0 then
-return true
-else
-return false
-end
+  RealCoolDown = GetSpellCooldown(spellID) + GetSpellCooldown(61304)
+  if RealCoolDown == 0 then
+    return true
+  else
+    return false
+  end
 end
 
 function getCharges(spell)
-charges = select(1, GetSpellCharges(spell))
-if charges ~= nil then
-  return charges
+  charges = select(1, GetSpellCharges(spell))
+  if charges ~= nil then
+    return charges
   else if charges == nil then
-charges = 0
-return charges
-end
-end
+    charges = 0
+    return charges
+  end
+  end
 end
 
 function getCount(spell)
 return GetSpellCount(spell)
-  end
+end
 
 function isTargetMoving(target)
-if UnitMovementFlags(target) == 0 then
-  return false
+  if UnitMovementFlags(target) == 0 then
+    return false
   else return true
   end
 end
@@ -134,16 +133,46 @@ end
 function isInRange(unit)
   if UnitInRange(unit) then
     return true
-    else return false
-    end
+  else return false
+  end
 end
 
 function canDispell(unit)
   for i=1,40 do
-dispellable = select(5, UnitDebuff(unit, i))
-if unit ~= nil and (dispellable == "Disease" or dispellable == "Magic" or dispellable == "Poison") then
-  return true
-  else return false
+    dispellable = select(5, UnitDebuff(unit, i))
+    if unit ~= nil and (dispellable == "Disease" or dispellable == "Magic" or dispellable == "Poison") then
+      return true
+    else return false
+    end
   end
+end
+
+function lineOfSight(target)
+  local sX, sY, sZ = ObjectPosition("player");
+  local oX, oY, oZ = ObjectPosition(target);
+  local losFlags =  bit.bor(0x10, 0x100, 0x1)
+  return TraceLine(sX, sY, sZ + 2.25, oX, oY, oZ + 2.25, losFlags) == nil;
+end
+
+function FaceUnit(unit)
+  if UnitExists(unit) and UnitIsVisible(unit) then
+    local _, pX, pY, pZ = pcall(ObjectPosition, 'player')
+    local _, uX, uY, uZ = pcall(ObjectPosition, unit)
+    local angle = rad(atan2(uY - pY, uX - pX))
+    if angle < 0 then
+      return FaceDirection(rad(atan2(uY - pY, uX - pX) + 360))
+    else
+      return FaceDirection(angle)
+    end
+  end
+end
+
+function partyAffectingCombat()
+  for i=1, #Group do
+    if UnitAffectingCombat(Group[i].Unit) then
+      return true
+      else
+        return false
+    end 
   end
 end

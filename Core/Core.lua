@@ -5,12 +5,14 @@ local Can_I_Breathe = false
 betaraid = false
 local name = UnitName("player")
 misty = "|cffff69b4[Misty]|r"
+total = 0
 --+---------------------+--
 --|Addon Update Function|--
 --+---------------------+--
 function StartBestFuckingHealing()
   MainFrame = CreateFrame("FRAME", nil, UIParent)
   MainFrame:SetScript("OnUpdate", MistyJustUpdated)
+
 end
 --+------------+--
 --|Toggle Misty|--
@@ -24,32 +26,47 @@ function MistyToggle()
         print(misty, "Goodbye,", name, "please be sure to carry on your duties without me!  ")
   end
 end
+function RaidToggle()
+  if not betaraid then
+    betaraid = true
+        print(misty, "Raid healing enabled note this is in beta and might not perform well.  ")
+  else
+    betaraid = false
+        print(misty, "Raid healing disabled.  ")
+  end
+end
 --+-----------------+--
 --|Initiate Rotation|--
 --+-----------------+--
 function MistyJustUpdated(self, elapsed)
+  total = total + elapsed
+  if total <= .250 then
   if Can_I_Breathe then
     MistyPleaseDoYourRotation();
     bossManager()
+    end
+    elseif total >= 1 then
+      total = 0
   end
 end
 --+-------------------+--
 --|Am I Out Of Combat?|--
 --+-------------------+-- 
-AddEventCallback("PLAYER_REGEN_DISABLED", function()
+AddEventCallback("GROUP_ROSTER_UPDATE", function()
+table.wipe(Group)
 populateMyGroup()
-print(misty, "We seem to be under attack!")
-combat = true;
+
+
 end)
+
+AddEventCallback("GROUP_JOINED", function()
+  table.wipe(Group)
+populateMyGroup()
+
+  end)
 --+---------------+--
 --|Am I In Combat?|--
 --+---------------+--
-AddEventCallback("PLAYER_REGEN_ENABLED", function()
-table.wipe(Group)
-print(misty, "Phew, that was a tough one!  ")
-combat = false;
-resetLowestHealths()
-end)
 --+--------+--
 --|Commands|--
 --+--------+--
@@ -65,8 +82,7 @@ function handler(msg, editbox)
     elseif msg == "debug" then
       print(misty, "Debugging Enabled")
       elseif msg == "raid" then
-        print(misty, "Raid healing enabled note this is in beta and might not perform well.  ")
-        betaraid = true
+        RaidToggle()
         elseif msg == "help" then
           print(misty, "Available commands:  toggle, debug, raid, help")
       else print(misty, "Invalid Command:", msg)
