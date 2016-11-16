@@ -43,10 +43,14 @@ function MistyJustUpdated(self, elapsed)
   if total <= .250 then
   if Can_I_Breathe then
     MistyPleaseDoYourRotation();
-    bossManager()
-    end
+          partyAffectingCombat()
+          bossManager()
     elseif total >= 1 then
       total = 0
+    else
+          partyAffectingCombat()
+          bossManager()
+    end
   end
 end
 --+-------------------+--

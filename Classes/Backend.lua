@@ -55,16 +55,6 @@ function getLowestHealth()
   end
 end
 
-function getNumberOfPlayersBellow(a)
-  for i = 1, #Group do
-    if Group[a] ~= nil and (Group[a].Role == "DAMAGER" or "NONE") then
-      getTwoBellowHealth = getHealth(Group[a].Unit)
-      getTwoBellowUnit = Group[a].Unit
-      return getXBellowHealth, getXBellowUnit
-    end
-  end
-end
-
 function lifeCheck()
   for i=1,#Group do
     if Group[i] ~= nil then
@@ -174,5 +164,30 @@ function partyAffectingCombat()
       else
         return false
     end 
+  end
+end
+
+function getDistanceBetween(target, base)
+  local X1, Y1, Z1 = ObjectPosition(target)
+  local X2, Y2, Z2 = ObjectPosition(base)
+  return math.sqrt(((X1 - X2)^2) + ((Y1 - Y2)^2) + ((Z1 - Z2)^2))
+end
+
+function noUnitsInRangeOf(target, yards)
+  for i=1, #Group do
+    if getDistanceBetween(target, Group[i].Unit) <= yards then
+      return false
+    end
+      return true
+  end
+end
+
+function getXBellow(x)
+  for i=1, #Group do
+    if Group[x].Unit ~= nil and (Group[x].Role == "DAMAGER" or "NONE") then
+      getTwoBellowHealth = getHealth(Group[x].Unit)
+      getTwoBellowUnit = Group[x].Unit
+      return getXBellowHealth, getXBellowUnit
+    end
   end
 end

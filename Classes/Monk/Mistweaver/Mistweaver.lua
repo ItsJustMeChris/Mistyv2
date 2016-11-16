@@ -3,7 +3,6 @@
 --+-------------------+--
 local groupType = IsInRaid() and "raid" or "party";
 function WeaveThatMist()
-    partyAffectingCombat()
     if partyAffectingCombat() then
     --+--------------+--
     --|Begin Rotation|--
@@ -83,7 +82,7 @@ table.sort(Group, function(a,b) if UnitIsDeadOrGhost(a.Unit) then return false e
     getTankHealth()
     getHealerHealth()
     getLowestHealth()
-    getNumberOfPlayersBellow(5)
+    getXBellow(5)
   end
 --+------------+--
 --|End Rotation|--
